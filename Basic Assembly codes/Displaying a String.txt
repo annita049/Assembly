@@ -1,0 +1,32 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+S1 DB 'Apurbo loves$'
+S2 DB 'data mining$'
+.CODE
+MAIN PROC
+    ;Initialization of data segment
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    MOV AH,9
+    LEA DX,S1   ;Load Effective Address
+    INT 21H
+    
+    ;Newline
+    MOV AH,2
+    MOV DL,0AH
+    INT 21H
+    MOV DL,0DH
+    INT 21H
+    
+    LEA DX,S2
+    MOV AH,9
+    INT 21H
+    
+    EXIT:
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP   
+
+END MAIN

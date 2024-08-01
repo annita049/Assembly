@@ -1,0 +1,36 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+line1 DB 'Enter a uppercase letter: $'
+line2 DB 0AH,0DH,'In lowercase it is: ','$'
+char DB ?
+.CODE
+CASECONV PROC 
+    
+    MOV AX,@DATA
+    MOV DS,AX 
+        
+    MOV AH,9
+    LEA DX,line1
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV char,AL
+    ADD char,32
+    
+    MOV AH,9
+    LEA DX,line2
+    INT 21H
+    
+    
+    MOV AH,2
+    MOV DL,char
+    INT 21H
+    
+    EXIT:
+    MOV AH,4CH
+    INT 21H
+    CASECONV ENDP   
+
+END CASECONV               

@@ -1,0 +1,28 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+var1 DB 7
+var2 DB ?
+.CODE
+MAIN PROC 
+    
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    MOV AH,1
+    INT 21H
+    MOV var2,AL    ;var2 is user input
+    
+    MOV AH,2
+    MOV DL,var2
+    INT 21H
+    ADD var1,48
+    MOV DL,var1
+    INT 21H
+    
+    EXIT:
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP   
+
+END MAIN

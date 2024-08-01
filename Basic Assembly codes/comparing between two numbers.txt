@@ -1,0 +1,52 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG1 DB 'Enter a number: $'
+MSG2 DB '   Greater$'
+MSG3 DB '   Smaller$'
+MSG4 DB '   Equal$'
+.CODE
+MAIN PROC 
+    
+    MOV AX,@DATA
+    MOV DS,AX
+      
+    MOV AH,9
+    LEA DX,MSG1
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV BL,AL
+    SUB BL,30H
+        
+    CMP BL,4
+    JG L1
+    JE L2
+    
+    ;the number is smaller
+    MOV AH,9
+    LEA DX,MSG3
+    INT 21H
+    
+    JMP EXIT
+    
+    ;the number is greater
+    L1:
+    MOV AH,9
+    LEA DX,MSG2
+    INT 21H 
+    
+    JMP EXIT
+    
+    ;the number is equal
+    L2:
+    MOV AH,9
+    LEA DX,MSG4
+    INT 21H
+    
+    EXIT:
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP
+END MAIN

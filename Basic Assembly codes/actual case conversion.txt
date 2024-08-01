@@ -1,0 +1,58 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG1 DB 'Enter an English letter: $'
+MSG2 DB 0DH,0AH,'In upper case it is: $'
+MSG3 DB 0DH,0AH,'In lower case it is: $'
+MSG4 DB 'RANDOM$'
+.CODE
+MAIN PROC 
+    
+    MOV AX,@DATA
+    MOV DS,AX
+      
+    MOV AH,9
+    LEA DX,MSG1
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV BL,AL
+        
+    CMP BL,97
+    JGE L1
+    
+    ;the letter is in upper case 
+    
+    MOV AH,9
+    LEA DX,MSG3
+    INT 21H
+    
+    ADD BL,20H
+    MOV AH,2
+    MOV DL,BL 
+    INT 21H 
+    
+    JMP EXIT
+         
+         
+    ;the letter is in lower case
+    
+    L1:
+    
+    MOV AH,9
+    LEA DX,MSG2
+    INT 21H 
+    
+    SUB BL,20H
+    MOV AH,2
+    MOV DL,BL
+    INT 21H
+    
+    ;JMP EXIT
+    
+    EXIT:
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP
+END MAIN
